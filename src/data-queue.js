@@ -9,42 +9,24 @@ const NATURE = {
   rotatable: true,
   properties: [
     {
-      type: "string",
-      label: "queue",
-      name: "queue"
+      type: "number",
+      label: "max-size",
+      name: "maximumSize"
+    },
+    {
+      type: "number",
+      label: "min-size",
+      name: "minimumSize"
     }
   ],
   "value-property": "source"
 };
 
-import {
-  Component,
-  RectPath,
-  Shape,
-  ScriptLoader,
-  error
-} from "@hatiolab/things-scene";
+import { Component, RectPath, Shape, error } from "@hatiolab/things-scene";
 
 const SELF = function(o) {
   return o;
 };
-
-function buildQueue(queue) {
-  if (!queue) return SELF;
-
-  var queues = String(queue)
-    .trim()
-    .replace(/\[(\w+)\]/g, ".$1")
-    .replace(/^\./, "")
-    .split(".")
-    .filter(queue => !!queue.trim());
-
-  return queues.length > 0
-    ? function(o) {
-        return queues.reduce((o, queue) => (o ? o[queue] : undefined), o);
-      }
-    : SELF;
-}
 
 export default class DataQueue extends RectPath(Shape) {
   static get nature() {
@@ -56,16 +38,7 @@ export default class DataQueue extends RectPath(Shape) {
       DataQueue._image = new Image();
       DataQueue._image.src = COMPONENT_IMAGE;
     }
-
     return DataQueue._image;
-  }
-
-  get queueFunc() {
-    if (!this._queueFunc) {
-      this._queueFunc = buildQueue(this.getState("queue"));
-    }
-
-    return this._queueFunc;
   }
 
   render(context) {
@@ -76,20 +49,36 @@ export default class DataQueue extends RectPath(Shape) {
   }
 
   onchange(after, before) {
-    if (after.hasOwnProperty("queue")) {
-      delete this._queueFunc;
-      this.setState("data", this.queueFunc(this.getState("source")));
-    } else if (after.hasOwnProperty("source")) {
-      this.setState("data", this.queueFunc(this.getState("source")));
+    if ("source" in after) {
+      this._buildQueue();
     }
   }
 
-  get queue() {
-    return this.getState("queue");
-  }
-
-  set queue(queue) {
-    this.setState("queue", queue);
+  _buildQueue() {
+    let { source, maximumSize, minimumSize } = this.state;
+    if (!this.result_queue) {
+      var result_queue = [];
+    } else {
+      var result_queue = this.result_queue;
+    }
+    if (!maximumSize) {
+      result_queue.push({ queue_data: source });
+    } else {
+      if (result_queue.length >= maximumSize) {
+        result_queue.shift();
+        result_queue.push({ queue_data: source });
+      } else {
+        result_queue.push({ queue_data: source });
+      }
+    }
+    if (!minimumSize) {
+      this.setState("data", [...result_queue]);
+    } else {
+      if (result_queue.length >= minimumSize) {
+        this.setState("data", [...result_queue]);
+      }
+    }
+    this.setState("result_queue", result_queue);
   }
 
   get source() {
@@ -98,6 +87,14 @@ export default class DataQueue extends RectPath(Shape) {
 
   set source(source) {
     this.setState("source", source);
+  }
+
+  get result_queue() {
+    return this.getState("result_queue");
+  }
+
+  set result_queue(result_queue) {
+    this.setState("result_queue", result_queue);
   }
 
   get hasTextProperty() {

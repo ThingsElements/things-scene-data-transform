@@ -75,7 +75,7 @@ export default class DataPaginator extends RectPath(Shape) {
   }
 
   _buildData() {
-    let { source, pageSize, currentPage = 0 } = this.state;
+    let { source, pageSize, currentPage = 1 } = this.state;
 
     if (!source || !source instanceof Array) {
       return;
@@ -91,7 +91,8 @@ export default class DataPaginator extends RectPath(Shape) {
       });
     } else {
       let totalPage =
-        source.length / pageSize + (source.length % pageSize ? 1 : 0);
+        Math.floor(source.length / pageSize) +
+        (source.length % pageSize ? 1 : 0);
       currentPage %= totalPage;
       let offset = currentPage * pageSize;
       this.setState("data", {
@@ -101,7 +102,6 @@ export default class DataPaginator extends RectPath(Shape) {
         list: source.slice(offset, Number(offset) + Number(pageSize))
       });
     }
-
     this.setState("currentPage", ++currentPage);
   }
 
@@ -115,6 +115,7 @@ export default class DataPaginator extends RectPath(Shape) {
       this._buildInterval();
     }
   }
+
   dispose() {
     super.dispose();
     clearInterval(this._interval);

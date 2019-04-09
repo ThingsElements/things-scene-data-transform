@@ -4,4 +4,13 @@ import DataMap from "./data-map";
 import DataQueue from "./data-queue";
 import DataPaginator from "./data-paginator";
 import DataFilter from "./data-filter";
-export default [DataAccessor, DataEnhancer, DataMap, DataQueue, DataPaginator, DataFilter];
+import DataReducer from "./data-reducer";
+export default [
+  DataAccessor,
+  DataEnhancer,
+  DataMap,
+  DataQueue,
+  DataPaginator,
+  DataFilter,
+  DataReducer
+];

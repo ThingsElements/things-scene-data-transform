@@ -7,13 +7,7 @@ const NATURE = {
   mutable: false,
   resizable: true,
   rotatable: true,
-  properties: [
-    {
-      type: "string",
-      label: "reducer",
-      name: "reducer"
-    }
-  ],
+  properties: [],
   "value-property": "source"
 };
 
@@ -29,23 +23,6 @@ const SELF = function(o) {
   return o;
 };
 
-function buildReducer(reducer) {
-  if (!reducer) return SELF;
-
-  var reducers = String(reducer)
-    .trim()
-    .replace(/\[(\w+)\]/g, ".$1")
-    .replace(/^\./, "")
-    .split(".")
-    .filter(reducer => !!reducer.trim());
-
-  return reducers.length > 0
-    ? function(o) {
-        return reducers.reduce((o, reducer) => (o ? o[reducer] : undefined), o);
-      }
-    : SELF;
-}
-
 export default class DataReducer extends RectPath(Shape) {
   static get nature() {
     return NATURE;
@@ -60,14 +37,6 @@ export default class DataReducer extends RectPath(Shape) {
     return DataReducer._image;
   }
 
-  get reducerFunc() {
-    if (!this._reducerFunc) {
-      this._reducerFunc = buildReducer(this.getState("reducer"));
-    }
-
-    return this._reducerFunc;
-  }
-
   render(context) {
     var { left, top, width, height } = this.bounds;
 
@@ -76,22 +45,14 @@ export default class DataReducer extends RectPath(Shape) {
   }
 
   onchange(after, before) {
-    if (after.hasOwnProperty("reducer")) {
-      delete this._reducerFunc;
-      this.setState("data", this.reducerFunc(this.getState("source")));
-    } else if (after.hasOwnProperty("source")) {
-      this.setState("data", this.reducerFunc(this.getState("source")));
+    if ("source" in after) {
+      this._buildReducer();
     }
   }
-
-  get reducer() {
-    return this.getState("reducer");
+  _buildReducer() {
+    let { source } = this.state;
+    console.log(source);
   }
-
-  set reducer(reducer) {
-    this.setState("reducer", reducer);
-  }
-
   get source() {
     return this.getState("source");
   }

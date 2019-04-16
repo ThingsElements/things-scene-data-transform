@@ -5,4 +5,5 @@ import dataPaginator from "./data-paginator";
 import dataQueue from "./data-queue";
 import dataReducer from "./data-reducer";
 import dataMap from "./data-map";
-export default [dataAccessor, dataEnhancer, dataFilter, dataPaginator, dataQueue, dataReducer, dataMap];
+import dataWrapper from "./data-wrapper";
+export default [dataAccessor, dataEnhancer, dataFilter, dataPaginator, dataQueue, dataReducer, dataMap, dataWrapper];

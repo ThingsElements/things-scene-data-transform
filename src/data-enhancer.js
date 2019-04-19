@@ -10,8 +10,30 @@ const NATURE = {
   properties: [
     {
       type: "string",
-      label: "enhancer",
-      name: "enhancer"
+      label: "index-name",
+      name: "indexName"
+    },
+    {
+      type: "string",
+      label: "accessor-target",
+      name: "accessorTarget"
+    },
+    {
+      type: "select",
+      label: "index-type",
+      name: "indexType",
+      property: {
+        options: [
+          {
+            display: "기본",
+            value: "standard"
+          },
+          {
+            display: "0, 1 반복",
+            value: "repeating"
+          }
+        ]
+      }
     }
   ],
   "value-property": "source"
@@ -29,26 +51,6 @@ const SELF = function(o) {
   return o;
 };
 
-function buildEnhancer(enhancer) {
-  if (!enhancer) return SELF;
-
-  var enhancers = String(enhancer)
-    .trim()
-    .replace(/\[(\w+)\]/g, ".$1")
-    .replace(/^\./, "")
-    .split(".")
-    .filter(enhancer => !!enhancer.trim());
-
-  return enhancers.length > 0
-    ? function(o) {
-        return enhancers.reduce(
-          (o, enhancer) => (o ? o[enhancer] : undefined),
-          o
-        );
-      }
-    : SELF;
-}
-
 export default class DataEnhancer extends RectPath(Shape) {
   static get nature() {
     return NATURE;
@@ -59,16 +61,7 @@ export default class DataEnhancer extends RectPath(Shape) {
       DataEnhancer._image = new Image();
       DataEnhancer._image.src = COMPONENT_IMAGE;
     }
-
     return DataEnhancer._image;
-  }
-
-  get enhancerFunc() {
-    if (!this._enhancerFunc) {
-      this._enhancerFunc = buildEnhancer(this.getState("enhancer"));
-    }
-
-    return this._enhancerFunc;
   }
 
   render(context) {
@@ -79,22 +72,38 @@ export default class DataEnhancer extends RectPath(Shape) {
   }
 
   onchange(after, before) {
-    if (after.hasOwnProperty("enhancer")) {
-      delete this._enhancerFunc;
-      this.setState("data", this.enhancerFunc(this.getState("source")));
-    } else if (after.hasOwnProperty("source")) {
-      this.setState("data", this.enhancerFunc(this.getState("source")));
+    if ("source" in after) {
+      this._buildEnhancer();
     }
   }
 
-  get enhancer() {
-    return this.getState("enhancer");
+  _buildEnhancer() {
+    let { source, indexType, indexName, accessorTarget } = this.state;
+    if (!indexType) {
+      indexType = "standard";
+    }
+    if (accessorTarget && accessorTarget in source) {
+      var source_target = source[accessorTarget];
+      switch (indexType) {
+        case "standard":
+          for (var i = 0; i < source_target.length; i++) {
+            source_target[i][indexName] = i;
+          }
+          break;
+        case "repeating":
+          for (var i = 0; i < source_target.length; i++) {
+            if (i % 2 === 0) {
+              source_target[i][indexName] = 0;
+            } else {
+              source_target[i][indexName] = 1;
+            }
+          }
+          break;
+      }
+      source[accessorTarget] = source_target;
+      this.setState("data", { ...source });
+    }
   }
-
-  set enhancer(enhancer) {
-    this.setState("enhancer", enhancer);
-  }
-
   get source() {
     return this.getState("source");
   }

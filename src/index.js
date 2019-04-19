@@ -1,9 +1,14 @@
 import DataAccessor from "./data-accessor";
 import DataEnhancer from "./data-enhancer";
-import DataMap from "./data-map";
 import DataQueue from "./data-queue";
 import DataPaginator from "./data-paginator";
-import DataFilter from "./data-filter";
 import DataReducer from "./data-reducer";
 import DataWrapper from "./data-wrapper";
-export default [DataAccessor, DataEnhancer, DataMap, DataQueue, DataPaginator, DataFilter, DataReducer, DataWrapper];
+export default [
+  DataAccessor,
+  DataEnhancer,
+  DataQueue,
+  DataPaginator,
+  DataReducer,
+  DataWrapper
+];

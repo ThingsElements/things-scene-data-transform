@@ -102,54 +102,50 @@ export default class DataReducer extends RectPath(Shape) {
     if (!reducingType) {
       reducingType = "reduce_sum";
     }
+
     if (accessorTarget && accessorTarget in source) {
       var source_target = source[accessorTarget];
       var target_item = source_target.map(m => m[accessorItem]);
-    }
-    if (
-      accessorTarget &&
-      accessorTarget in source &&
-      accessorItem &&
-      reducingPropname
-    ) {
-      switch (reducingType) {
-        case "reduce_sum":
-          var return_val = target_item.reduce(
-            (partial_sum, a) => partial_sum + a
-          );
-          source[reducingPropname] = return_val;
-          break;
-        case "reduce_mean":
-          var return_val =
-            target_item.reduce((partial_sum, a) => partial_sum + a) /
-            target_item.length;
-          source[reducingPropname] = return_val;
-          break;
-        case "reduce_sd":
-          var array_length = target_item.length;
-          var mean =
-            target_item.reduce((partial_sum, a) => partial_sum + a) /
-            array_length;
-          var return_val = Math.sqrt(
-            target_item
-              .map(x => Math.pow(x - mean, 2))
-              .reduce((a, b) => a + b) / array_length
-          );
-          source[reducingPropname] = return_val;
-          break;
-        case "reduce_variance":
-          var array_length = target_item.length;
-          var mean =
-            target_item.reduce((partial_sum, a) => partial_sum + a) /
-            array_length;
-          var return_val =
-            target_item
-              .map(num => Math.pow(num - mean, 2))
-              .reduce((partial_sum, a) => partial_sum + a) / array_length;
-          source[reducingPropname] = return_val;
-          break;
+      if (accessorItem && reducingPropname) {
+        switch (reducingType) {
+          case "reduce_sum":
+            var return_val = target_item.reduce(
+              (partial_sum, a) => partial_sum + a
+            );
+            source[reducingPropname] = return_val;
+            break;
+          case "reduce_mean":
+            var return_val =
+              target_item.reduce((partial_sum, a) => partial_sum + a) /
+              target_item.length;
+            source[reducingPropname] = return_val;
+            break;
+          case "reduce_sd":
+            var array_length = target_item.length;
+            var mean =
+              target_item.reduce((partial_sum, a) => partial_sum + a) /
+              array_length;
+            var return_val = Math.sqrt(
+              target_item
+                .map(x => Math.pow(x - mean, 2))
+                .reduce((a, b) => a + b) / array_length
+            );
+            source[reducingPropname] = return_val;
+            break;
+          case "reduce_variance":
+            var array_length = target_item.length;
+            var mean =
+              target_item.reduce((partial_sum, a) => partial_sum + a) /
+              array_length;
+            var return_val =
+              target_item
+                .map(num => Math.pow(num - mean, 2))
+                .reduce((partial_sum, a) => partial_sum + a) / array_length;
+            source[reducingPropname] = return_val;
+            break;
+        }
+        this.setState("data", { ...source });
       }
-      this.setState("data", { ...source });
     }
   }
 

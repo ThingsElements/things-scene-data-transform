@@ -20,7 +20,7 @@ const NATURE = {
       placeHolder: "Seconds"
     }
   ],
-  "value-property": "source"
+  "value-property": "currentPage"
 };
 
 import { Component, RectPath, Shape, error } from "@hatiolab/things-scene";
@@ -69,9 +69,23 @@ export default class DataPaginator extends RectPath(Shape) {
       return;
     }
 
-    this._interval = setInterval(() => {
-      this._buildData();
-    }, duration * 1000);
+    if (Number(duration)) {
+      this._interval = setInterval(() => {
+        let { source, pageSize, currentPage = 1 } = this.state;
+
+        let totalPage =
+          Math.floor(source.length / pageSize) +
+          (source.length % pageSize ? 1 : 0);
+
+        if (++currentPage > totalPage) {
+          currentPage = 1;
+        }
+
+        this.setState("currentPage", currentPage);
+
+        this._buildData();
+      }, duration * 1000);
+    }
   }
 
   _buildData() {
@@ -81,33 +95,54 @@ export default class DataPaginator extends RectPath(Shape) {
       return;
     }
 
+    let currentPageIndex = currentPage - 1;
+
     if (!pageSize) {
-      currentPage = 0;
+      currentPage = 1;
       this.setState("data", {
         totalPage: 1,
+        totalRecords: source.length,
         currentPage,
         pageSize: 0,
+        currentPageSize: data.length,
+        startIndex: 1,
+        endIndex: source.length,
         list: source
       });
     } else {
       let totalPage =
         Math.floor(source.length / pageSize) +
         (source.length % pageSize ? 1 : 0);
-      currentPage %= totalPage;
-      let offset = currentPage * pageSize;
+
+      let offset = currentPageIndex * pageSize;
+      let data = source.slice(offset, Number(offset) + Number(pageSize));
+
+      currentPage = currentPageIndex + 1;
+
       this.setState("data", {
         totalPage,
+        totalRecords: source.length,
         currentPage,
         pageSize,
-        list: source.slice(offset, Number(offset) + Number(pageSize))
+        currentPageSize: data.length,
+        list: data,
+        ...(currentPage > 0 && currentPage < totalPage + 1
+          ? {
+              startIndex: currentPageIndex * pageSize + 1,
+              endIndex: Math.min(
+                currentPageIndex * pageSize + data.length,
+                source.length
+              )
+            }
+          : {})
       });
     }
-    this.setState("currentPage", ++currentPage);
+    this.setState("currentPage", currentPage);
   }
 
   onchange(after, before) {
     if ("source" in after) {
-      this.setState("currentPage", 0);
+      this.setState("currentPage", 1);
       this._buildData();
     }
 
@@ -127,6 +162,43 @@ export default class DataPaginator extends RectPath(Shape) {
 
   set source(source) {
     this.setState("source", source);
+  }
+
+  get currentPage() {
+    return this.getState("currentPage");
+  }
+
+  set currentPage(page) {
+    let { source = [], pageSize, currentPage = 1 } = this.state;
+
+    let totalPage =
+      Math.floor(source.length / pageSize) + (source.length % pageSize ? 1 : 0);
+
+    switch (page) {
+      case "first":
+        page = 1;
+        break;
+      case "back":
+        page = Math.max(currentPage - 1, 1);
+        break;
+      case "next":
+        page = Math.min(currentPage + 1, totalPage);
+        break;
+      case "last":
+        page = totalPage;
+        break;
+      default:
+        break;
+    }
+
+    page = Number(page);
+    if (isNaN(page)) {
+      return;
+    }
+
+    this.setState("currentPage", page);
+
+    this._buildData();
   }
 
   get hasTextProperty() {

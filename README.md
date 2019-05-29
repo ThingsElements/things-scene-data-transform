@@ -18,7 +18,20 @@ Object내 accessor-target에 해당되는 Array에 입력 받은 index-name값�
 
 **properties: page-size, duration**
 
-한 페이지에 표시될 갯수를 page-size으로 설정하여 해당 갯수만큼, duration에 입력된 초의 시간 동안 데이터를 표시해주는 컴포넌트이다.
+한 페이지에 표시될 갯수를 page-size으로 설정하여 해당 갯수만큼, duration에 입력된 초의 시간 동안 데이터를 표시해주는 컴포넌트이다. 또한 탭을 이용해 처음 페이지로 이동, 마지막 페이지로 이동, 전 페이지, 다음 페이지 이동이 가능하며, 직접 입력받은 페이지 이동또한 가능하다.
+
+#### 탭을 이용한 페이지 이동
+
+1. 사용할 paginator을 생성한다.
+2. 클릭 이벤트를 받을 컴포넌트를 생성한다.
+3. 해당 컴포넌트의 탭 이벤트의 action을 set value to target component로 설정한다. 대상은 1에서 생성한 data-paginator의 아이디를 입력해준다.
+4. 값은 first(처음 페이지로 이동), last(마지막 페이지로 이동), back(전 페이지로 이동), next(다음 페이지로 이동) 중에서 원하는 값을 입력해준다.
+
+#### 입력받은 페이지 번호를 통한 이동
+
+1. 사용할 paginator을 생성한다.
+2. Input-Number 컴포넌트를 생성한다.
+3. 2에서 생성한 컴포넌트의 키값매핑에서 대상을 1의 paginator ID로 설정해주고, 속성을 value로 설정해준다.
 
 ## data-queue
 

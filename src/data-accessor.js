@@ -1,8 +1,7 @@
 /*
  * Copyright © HatioLab Inc. All rights reserved.
  */
-// 이부분이 accessor부분
-import COMPONENT_IMAGE from "./data-accessor.png";
+import COMPONENT_IMAGE from "../assets/no-image.png";
 
 const NATURE = {
   mutable: false,

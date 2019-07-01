@@ -30,19 +30,19 @@ const NATURE = {
       property: {
         options: [
           {
-            display: 'Sum(총합)',
+            display: 'Sum',
             value: 'reduce_sum'
           },
           {
-            display: 'Average(평균값)',
+            display: 'Average',
             value: 'reduce_mean'
           },
           {
-            display: 'Standard Deviation(표준편차)',
+            display: 'Standard Deviation',
             value: 'reduce_sd'
           },
           {
-            display: 'Variance(분산)',
+            display: 'Variance',
             value: 'reduce_variance'
           }
         ]

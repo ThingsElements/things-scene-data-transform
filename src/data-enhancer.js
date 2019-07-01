@@ -25,11 +25,11 @@ const NATURE = {
       property: {
         options: [
           {
-            display: '기본',
+            display: 'Standard(0, 1, 2, ...)',
             value: 'standard'
           },
           {
-            display: '0, 1 반복',
+            display: 'Repeating 0, 1',
             value: 'repeating'
           }
         ]

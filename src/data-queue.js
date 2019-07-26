@@ -7,8 +7,7 @@ const NATURE = {
   mutable: false,
   resizable: true,
   rotatable: true,
-  properties: [
-    {
+  properties: [{
       type: 'number',
       label: 'max-size',
       name: 'maximumSize'
@@ -17,14 +16,24 @@ const NATURE = {
       type: 'number',
       label: 'min-size',
       name: 'minimumSize'
-    }
+    },
+    {
+      type: 'string',
+      label: 'queue-propname',
+      name: 'queue_propname'
+    },
   ],
   'value-property': 'source'
 }
 
-import { Component, RectPath, Shape, error } from '@hatiolab/things-scene'
+import {
+  Component,
+  RectPath,
+  Shape,
+  error
+} from '@hatiolab/things-scene'
 
-const SELF = function(o) {
+const SELF = function (o) {
   return o
 }
 
@@ -42,7 +51,12 @@ export default class DataQueue extends RectPath(Shape) {
   }
 
   render(context) {
-    var { left, top, width, height } = this.bounds
+    var {
+      left,
+      top,
+      width,
+      height
+    } = this.bounds
 
     context.beginPath()
     context.drawImage(DataQueue.image, left, top, width, height)
@@ -55,30 +69,46 @@ export default class DataQueue extends RectPath(Shape) {
   }
 
   _buildQueue() {
-    let { source, maximumSize, minimumSize } = this.state
-    if (!this.result_queue) {
-      var result_queue = []
-    } else {
-      var result_queue = this.result_queue
-    }
-    if (!maximumSize) {
-      result_queue.push({ queue_data: source })
-    } else {
-      if (result_queue.length >= maximumSize) {
-        result_queue.shift()
-        result_queue.push({ queue_data: source })
+    let {
+      source,
+      maximumSize,
+      minimumSize,
+      queue_propname
+    } = this.state
+
+    if (queue_propname) {
+      if (!this.result_queue) {
+        var result_queue = []
       } else {
-        result_queue.push({ queue_data: source })
+        var result_queue = this.result_queue
       }
-    }
-    if (!minimumSize) {
-      this.setState('data', [...result_queue])
-    } else {
-      if (result_queue.length >= minimumSize) {
+      if (!maximumSize) {
+        result_queue.push({
+          [queue_propname]: source
+        })
+
+      } else {
+        if (result_queue.length >= maximumSize) {
+          result_queue.shift()
+          result_queue.push({
+            [queue_propname]: source
+          })
+        } else {
+          result_queue.push({
+            [queue_propname]: source
+          })
+
+        }
+      }
+      if (!minimumSize) {
         this.setState('data', [...result_queue])
+      } else {
+        if (result_queue.length >= minimumSize) {
+          this.setState('data', [...result_queue])
+        }
       }
+      this.setState('result_queue', result_queue)
     }
-    this.setState('result_queue', result_queue)
   }
 
   get source() {

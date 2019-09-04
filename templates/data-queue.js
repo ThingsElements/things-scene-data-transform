@@ -1,4 +1,4 @@
-import icon from './data-queue.png';
+import icon from '../assets/icon-data-queue.png'
 
 export default {
   type: 'data-queue',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

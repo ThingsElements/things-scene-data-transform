@@ -1,4 +1,4 @@
-import icon from './data-accessor.png';
+import icon from '../assets/icon-data-accessor.png'
 
 export default {
   type: 'data-accessor',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

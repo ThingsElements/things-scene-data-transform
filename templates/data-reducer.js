@@ -1,4 +1,4 @@
-import icon from './data-reducer.png';
+import icon from '../assets/icon-data-reducer.png'
 
 export default {
   type: 'data-reducer',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

@@ -1,4 +1,4 @@
-import icon from './data-enhancer.png';
+import icon from '../assets/icon-data-enhancer.png'
 
 export default {
   type: 'data-enhancer',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

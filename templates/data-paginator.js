@@ -1,4 +1,4 @@
-import icon from './data-paginator.png';
+import icon from '../assets/icon-data-paginator.png'
 
 export default {
   type: 'data-paginator',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

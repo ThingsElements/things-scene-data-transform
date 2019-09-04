@@ -1,4 +1,4 @@
-import icon from './data-wrapper.png';
+import icon from '../assets/icon-data-wrapper.png'
 
 export default {
   type: 'data-wrapper',
@@ -15,4 +15,4 @@ export default {
     fillStyle: 'cyan',
     strokeStyle: 'darkgray'
   }
-};
+}

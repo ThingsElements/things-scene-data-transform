@@ -7,7 +7,8 @@ const NATURE = {
   mutable: false,
   resizable: true,
   rotatable: true,
-  properties: [{
+  properties: [
+    {
       type: 'number',
       label: 'max-size',
       name: 'maximumSize'
@@ -20,20 +21,15 @@ const NATURE = {
     {
       type: 'string',
       label: 'queue-propname',
-      name: 'queue_propname'
-    },
+      name: 'queuePropName'
+    }
   ],
   'value-property': 'source'
 }
 
-import {
-  Component,
-  RectPath,
-  Shape,
-  error
-} from '@hatiolab/things-scene'
+import { Component, RectPath, Shape, error } from '@hatiolab/things-scene'
 
-const SELF = function (o) {
+const SELF = function(o) {
   return o
 }
 
@@ -51,12 +47,7 @@ export default class DataQueue extends RectPath(Shape) {
   }
 
   render(context) {
-    var {
-      left,
-      top,
-      width,
-      height
-    } = this.bounds
+    var { left, top, width, height } = this.bounds
 
     context.beginPath()
     context.drawImage(DataQueue.image, left, top, width, height)
@@ -69,14 +60,9 @@ export default class DataQueue extends RectPath(Shape) {
   }
 
   _buildQueue() {
-    let {
-      source,
-      maximumSize,
-      minimumSize,
-      queue_propname
-    } = this.state
+    let { source, maximumSize, minimumSize, queuePropName } = this.state
 
-    if (queue_propname) {
+    if (queuePropName) {
       if (!this.result_queue) {
         var result_queue = []
       } else {
@@ -84,20 +70,18 @@ export default class DataQueue extends RectPath(Shape) {
       }
       if (!maximumSize) {
         result_queue.push({
-          [queue_propname]: source
+          [queuePropName]: source
         })
-
       } else {
         if (result_queue.length >= maximumSize) {
           result_queue.shift()
           result_queue.push({
-            [queue_propname]: source
+            [queuePropName]: source
           })
         } else {
           result_queue.push({
-            [queue_propname]: source
+            [queuePropName]: source
           })
-
         }
       }
       if (!minimumSize) {

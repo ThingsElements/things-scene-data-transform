@@ -7,13 +7,6 @@ const NATURE = {
   mutable: false,
   resizable: true,
   rotatable: true,
-  properties: [
-    {
-      type: 'string',
-      label: 'target',
-      name: 'target'
-    }
-  ],
   'value-property': 'source'
 }
 
@@ -51,11 +44,9 @@ export default class DataSplitter extends RectPath(Shape) {
   }
 
   splitArray(targetArray) {
-    let targetId = this.target
-    let targetComponent = this.root.findById(targetId)
-    if (targetId && targetComponent) {
-      for (var i = 0; i <= targetArray.length; i++) {
-        targetComponent.data = targetArray[i]
+    if (targetArray.length) {
+      for (var i = 0; i < targetArray.length; i++) {
+        this.setState('data', targetArray[i])
       }
     }
     console.log(targetArray)
@@ -67,14 +58,6 @@ export default class DataSplitter extends RectPath(Shape) {
 
   set source(source) {
     this.setState('source', source)
-  }
-
-  get target() {
-    return this.getState('target')
-  }
-
-  set target(target) {
-    this.setState('target', target)
   }
 }
 

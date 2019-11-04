@@ -4,8 +4,6 @@
   "version": "0.0.8",
   "things-scene": true,
   "main": "src/index.js",
-  "module": "dist/things-scene-data-transform.mjs",
-  "jsnext:main": "dist/things-scene-data-transform.mjs",
   "author": "yuneunhye",
   "scripts": {
     "serve": "things-factory",

@@ -27,6 +27,8 @@
     "@things-scene/table": "*"
   },
   "dependencies": {
-    "@hatiolab/things-scene": "2.5.24"
+    "@hatiolab/things-scene": "2.5.46",
+    "@things-scene/github": "^0.0.1",
+    "@things-scene/grist": "^0.1.18"
   }
 }

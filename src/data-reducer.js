@@ -52,12 +52,7 @@ const NATURE = {
   'value-property': 'source'
 }
 
-import { Component, RectPath, Shape, ScriptLoader, error } from '@hatiolab/things-scene'
-
-const SELF = function(o) {
-  return o
-}
-
+import { Component, RectPath, Shape } from '@hatiolab/things-scene'
 export default class DataReducer extends RectPath(Shape) {
   static get nature() {
     return NATURE
@@ -136,8 +131,6 @@ export default class DataReducer extends RectPath(Shape) {
   get hasTextProperty() {
     return false
   }
-
-  get controls() {}
 }
 
 Component.register('data-reducer', DataReducer)

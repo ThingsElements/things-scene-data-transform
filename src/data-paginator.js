@@ -23,11 +23,7 @@ const NATURE = {
   'value-property': 'currentPage'
 }
 
-import { Component, RectPath, Shape, error } from '@hatiolab/things-scene'
-
-const SELF = function(o) {
-  return o
-}
+import { Component, RectPath, Shape } from '@hatiolab/things-scene'
 
 export default class DataPaginator extends RectPath(Shape) {
   static get nature() {
@@ -196,8 +192,6 @@ export default class DataPaginator extends RectPath(Shape) {
   get hasTextProperty() {
     return false
   }
-
-  get controls() {}
 }
 
 Component.register('data-paginator', DataPaginator)

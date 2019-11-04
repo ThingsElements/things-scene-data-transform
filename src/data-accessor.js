@@ -17,7 +17,7 @@ const NATURE = {
   'value-property': 'source'
 }
 
-import { Component, RectPath, Shape, ScriptLoader, error } from '@hatiolab/things-scene'
+import { Component, RectPath, Shape } from '@hatiolab/things-scene'
 
 const SELF = function(o) {
   return o
@@ -97,8 +97,6 @@ export default class DataAccessor extends RectPath(Shape) {
   get hasTextProperty() {
     return false
   }
-
-  get controls() {}
 }
 
 Component.register('data-accessor', DataAccessor)

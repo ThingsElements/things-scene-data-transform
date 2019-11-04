@@ -39,11 +39,7 @@ const NATURE = {
   'value-property': 'source'
 }
 
-import { Component, RectPath, Shape, ScriptLoader, error } from '@hatiolab/things-scene'
-
-const SELF = function(o) {
-  return o
-}
+import { Component, RectPath, Shape } from '@hatiolab/things-scene'
 
 export default class DataEnhancer extends RectPath(Shape) {
   static get nature() {
@@ -109,8 +105,6 @@ export default class DataEnhancer extends RectPath(Shape) {
   get hasTextProperty() {
     return false
   }
-
-  get controls() {}
 }
 
 Component.register('data-enhancer', DataEnhancer)

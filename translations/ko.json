@@ -1,0 +1,15 @@
+{
+  "label.accessor": "접근자",
+  "label.accessor-item": "접근자 아이템명",
+  "label.accessor-target": "접근자 대상",
+  "label.duration": "지속시간",
+  "label.index-name": "인덱스명",
+  "label.index-type": "인덱스 타입",
+  "label.max-size": "큐 사이즈",
+  "label.min-size": "최소 큐 사이즈",
+  "label.page-size": "페이지 사이즈",
+  "label.property-name": "속성명",
+  "label.queue-propname": "큐 이름",
+  "label.reducing-propname": "Reducing명",
+  "label.reducing-type": "Reducing 타입"
+}

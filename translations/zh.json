@@ -1,0 +1,15 @@
+{
+  "label.accessor": "访问器",
+  "label.accessor-item": "Accessor's Item",
+  "label.accessor-target": "Accessor's Target",
+  "label.duration": "持续期间",
+  "label.index-name": "Index Name",
+  "label.index-type": "Index type",
+  "label.max-size": "Queue Size",
+  "label.min-size": "Minimum Queue Size",
+  "label.page-size": "Page Size",
+  "label.property-name": "Property Name",
+  "label.queue-propname": "Queue name",
+  "label.reducing-propname": "Reducing Property Name",
+  "label.reducing-type": "Reducing Type"
+}

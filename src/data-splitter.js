@@ -1,7 +1,7 @@
 /*
  * Copyright © HatioLab Inc. All rights reserved.
  */
-import COMPONENT_IMAGE from '../assets/symbol-data-splitter.png'
+import COMPONENT_IMAGE from '../assets/data-splitter.png'
 
 const NATURE = {
   mutable: false,

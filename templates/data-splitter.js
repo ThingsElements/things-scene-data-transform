@@ -1,4 +1,4 @@
-import icon from '../assets/icon-data-splitter.png'
+import icon from '../assets/data-splitter.png'
 
 export default {
   type: 'data-splitter',

@@ -81,10 +81,7 @@ export default class DataReducer extends RectPath(Shape) {
   }
 
   _buildReducer() {
-    let { source, accessorTarget, accessorItem, reducingPropname, reducingType } = this.state
-    if (!reducingType) {
-      reducingType = 'reduce_sum'
-    }
+    let { source, accessorTarget, accessorItem, reducingPropname, reducingType = 'reduce_sum' } = this.state
 
     if (accessorTarget && accessorTarget in source) {
       var source_target = source[accessorTarget]

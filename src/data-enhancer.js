@@ -68,10 +68,8 @@ export default class DataEnhancer extends RectPath(Shape) {
   }
 
   _buildEnhancer() {
-    let { source, indexType, indexName, accessorTarget } = this.state
-    if (!indexType) {
-      indexType = 'standard'
-    }
+    let { source, indexType = 'standard', indexName, accessorTarget } = this.state
+
     if (accessorTarget && accessorTarget in source) {
       var source_target = source[accessorTarget]
       switch (indexType) {

@@ -45,6 +45,10 @@ Object내 accessor-target에 해당되는 Array에 입력 받은 index-name값�
 
 입력한 accessor-target에 해당되는 Array 형식의 데이터 중 accessor-item로 입력된 데이터들의 값을 처리해주는 기능이다. 총합, 평균값, 표준편차, 분산 값 등 원하는 reducing-type을 선택하면, 입력한 reducing-propname을 key 값으로 처리된 값을 제공하는 컴포넌트이다.
 
+## data-splitter
+
+Array 형식의 데이터를 한 인덱스씩 잘라서 전달하는 역할을 한다.
+
 ## data-wrapper
 
 **properties: property-name**

@@ -12,10 +12,6 @@ const NATURE = {
 
 import { Component, RectPath, Shape } from '@hatiolab/things-scene'
 
-const SELF = function(o) {
-  return o
-}
-
 export default class DataSplitter extends RectPath(Shape) {
   static get nature() {
     return NATURE

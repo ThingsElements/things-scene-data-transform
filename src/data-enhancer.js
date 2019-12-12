@@ -70,26 +70,30 @@ export default class DataEnhancer extends RectPath(Shape) {
   _buildEnhancer() {
     let { source, indexType = 'standard', indexName, accessorTarget } = this.state
 
-    if (accessorTarget && accessorTarget in source) {
-      var source_target = source[accessorTarget]
+    if ((!accessorTarget && Array.isArray(source)) || (accessorTarget && accessorTarget in source)) {
+      var sourceTarget = accessorTarget ? source[accessorTarget] : source
       switch (indexType) {
         case 'standard':
-          for (var i = 0; i < source_target.length; i++) {
-            source_target[i][indexName] = i
+          for (var i = 0; i < sourceTarget.length; i++) {
+            sourceTarget[i][indexName] = i
           }
           break
         case 'repeating':
-          for (var i = 0; i < source_target.length; i++) {
+          for (var i = 0; i < sourceTarget.length; i++) {
             if (i % 2 === 0) {
-              source_target[i][indexName] = 0
+              sourceTarget[i][indexName] = 0
             } else {
-              source_target[i][indexName] = 1
+              sourceTarget[i][indexName] = 1
             }
           }
           break
       }
-      source[accessorTarget] = source_target
-      this.setState('data', { ...source })
+      if (accessorTarget) {
+        source[accessorTarget] = sourceTarget
+        this.setState('data', { ...source })
+      } else {
+        this.setState('data', [...sourceTarget])
+      }
     }
   }
   get source() {

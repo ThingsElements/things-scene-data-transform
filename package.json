@@ -17,7 +17,7 @@
   "devDependencies": {
     "@things-factory/board-app": "^2.0.0",
     "@things-factory/board-test": "^2.0.0",
-    "@things-scene/chartjs": "ThingsElements/things-scene-chartjs#for-things-factory",
+    "@things-scene/chartjs": "*",
     "@things-scene/excel": "*",
     "@things-scene/form": "*",
     "@things-scene/random": "*",

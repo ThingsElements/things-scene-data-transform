@@ -1,7 +1,7 @@
 {
   "name": "@things-scene/data-transform",
   "description": "data-transform component for things-scene",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "things-scene": true,
   "main": "src/index.js",
   "author": "yuneunhye",
@@ -25,6 +25,6 @@
     "@things-scene/table": "*"
   },
   "dependencies": {
-    "@hatiolab/things-scene": "2.5.46"
+    "@hatiolab/things-scene": "*"
   }
 }
